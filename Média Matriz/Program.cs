@@ -18,17 +18,16 @@ namespace Média_Matriz
                     matrice[i,j] = d.Next(50);
                 }
             }
-            doTasks(matrice, dimensionMatrice);
+            calculateAvgValue(matrice, dimensionMatrice);
             Console.ReadKey();
         }
-        static public async void doTasks(int[,] matrice, int dimension)
+        static public async void calculateAvgValue(int[,] matrice, int dimension)
         {
             List<Task <int>> tasks = new List<Task <int>>();
             for (int i = 0; i < (dimension - 1); i++) {
                 tasks.Add(Task.Factory.StartNew((a) => {
                     string k = a.ToString();
                     int l = int.Parse(k);
-                    Console.WriteLine(l);
                     int averageValue = 0;
                     for (int j = 0; j < (dimension -1); j++) {
                         averageValue += matrice[l,j];
@@ -41,8 +40,6 @@ namespace Média_Matriz
             float avgValue = 0;
             for (int k = 0; k < (dimension - 1); k++) {
                 avgValue += (float)arrayTasks[k].Result / dimension;
-                Console.WriteLine("avgValue in loop: " + avgValue);
-                Console.WriteLine(arrayTasks[k].Result);
             }
             Console.WriteLine("avgValue: " + avgValue);
         }

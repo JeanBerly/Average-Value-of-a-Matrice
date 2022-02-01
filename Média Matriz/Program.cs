@@ -23,20 +23,20 @@ namespace Média_Matriz
         }
         static public async void calculateAvgValue(int[,] matrice, int dimension)
         {
-            List<Task <int>> tasks = new List<Task <int>>();
+            List<Task <float>> tasks = new List<Task <float>>();
             for (int i = 0; i < (dimension - 1); i++) {
                 tasks.Add(Task.Factory.StartNew((a) => {
                     string k = a.ToString();
                     int l = int.Parse(k);
-                    int averageValue = 0;
+                    float averageValue = 0;
                     for (int j = 0; j < (dimension -1); j++) {
-                        averageValue += matrice[l,j];
+                        averageValue += matrice[l,j] / 10;
                     }
                    return averageValue;
                 }, i));
             }
             Task.WaitAll(tasks.ToArray());
-            Task <int>[] arrayTasks = tasks.ToArray();
+            Task <float>[] arrayTasks = tasks.ToArray();
             float avgValue = 0;
             for (int k = 0; k < (dimension - 1); k++) {
                 avgValue += (float)arrayTasks[k].Result / dimension;
